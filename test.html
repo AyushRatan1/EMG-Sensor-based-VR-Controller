@@ -1,70 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LIC EL</title>
-<style>
-    body {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LIC EL</title>
+    <style>
+      body {
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
         background-color: #000000;
         color: #fff;
-    }
-    #video-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    z-index: -1;
-    opacity: 50%;
-}
-    #navbar {
-        
+      }
+      #video-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+        opacity: 50%;
+      }
+      #navbar {
         background-color: transparent; /* Dark background */
         padding: 15px;
         text-align: center;
         box-shadow: 0 0 20px rgb(255, 255, 255);
-    }
-    #content {
+      }
+      #content {
         display: flex;
         justify-content: space-between;
         padding: 20px;
-    }
-    #left-content {
+      }
+      #left-content {
         flex: 1;
         padding-right: 20px;
-    }
-    #graph {
+      }
+      #graph {
         height: 300px;
         background-color: transparent;
         border-radius: 5px;
         padding: 20px;
-    }
-    #random-data-box {
+      }
+      #random-data-box {
         background-color: #212020;
         border-radius: 5px;
         padding: 20px;
         margin-top: 20px;
-    }
-    #right-content {
+      }
+      #right-content {
         flex: 1;
         padding-left: 20px;
-    }
-    #video-box {
+      }
+      #video-box {
         background-color: transparent;
         border-radius: 5px;
         padding: 20px;
-        
-    }
-    .button-container {
+      }
+      .button-container {
         text-align: center;
         margin-top: 20px;
-    }
-    .button {
-        background-color: #4CAF50;
+      }
+      .button {
+        background-color: #4caf50;
         border: none;
         color: white;
         padding: 15px 32px;
@@ -75,194 +73,195 @@
         margin: 4px 2px;
         cursor: pointer;
         border-radius: 5px;
-    }
-    .container {
-    max-width: 1500px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: transparent; /* Dark background */
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.541);
-}
-</style>
-</head>
-<body>
+      }
+      .container {
+        max-width: 1500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: transparent; /* Dark background */
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.541);
+      }
+    </style>
+  </head>
+  <body>
     <div id="navbar">
-        <h1>Hand Movement Representation</h1>
+      <h1>Hand Movement Representation</h1>
     </div>
     <video id="video-bg" autoplay loop muted>
-        <source src="C:\Users\ayush\Downloads\golden_-_48569 (1080p).mp4" type="video/mp4" >
-        Your browser does not support the video tag.
+      <source src="back.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
     </video>
     <div class="container">
-    <div id="content">
+      <div id="content">
         <div id="left-content">
-            <div id="graph">
-                <canvas id="myChart"></canvas>
-            </div>
-            <div id="random-data-box">
-                <h2>Hand Motion Data</h2>
-                <p id="random-data"></p>
-            </div>
-            <div class="button-container">
-                <button class="button" id="up-button">Up</button>
-                <button class="button" id="down-button">Down</button>
-            </div>
+          <div id="graph">
+            <canvas id="myChart"></canvas>
+          </div>
+          <div id="random-data-box">
+            <h2>Hand Motion Data</h2>
+            <p id="random-data"></p>
+          </div>
+          <div class="button-container">
+            <button class="button" id="up-button">Start</button>
+            <button class="button" id="down-button">Stop</button>
+          </div>
         </div>
         <div id="right-content">
-            <div id="video-box">
-                <h2>Video Box</h2>
-                <video width="100%" autoplay muted id="video">
-                    <!-- Video source will be changed dynamically -->
-                </video>
-            </div>
+          <div id="video-box">
+            <h2>Video Box</h2>
+            <video width="100%" autoplay muted id="video">
+              <!-- Video source will be changed dynamically -->
+            </video>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var video = document.getElementById('video');
-        var upButton = document.getElementById('up-button');
-        var downButton = document.getElementById('down-button');
-        var randomData = document.getElementById('random-data');
+      var video = document.getElementById("video");
+      var upButton = document.getElementById("up-button");
+      var downButton = document.getElementById("down-button");
+      var randomData = document.getElementById("random-data");
 
-        // Set initial video source
-        video.src = "C:/sers/ayush/Desktop/EMG/up2.mp4";
-        randomData.innerHTML = "";
+      // Set initial video source
+      video.src = "C:/sers/ayush/Desktop/EMG/up2.mp4";
+      randomData.innerHTML = "";
 
-         // Random data for up and down motions
-        var upMotionData = generateIncreasingData();
-        var downMotionData = generateDecreasingData();
-        
+      // Random data for up and down motions
+      var upMotionData = generateIncreasingData();
+      var downMotionData = generateDecreasingData();
 
-        // Event listeners for button clicks
-        upButton.addEventListener('click', function() {
-            video.src = "./EMG/up2.mp4";
-            startDisplayingUpData();
-            drawGraph(data);
-        });
+      // Event listeners for button clicks
+      upButton.addEventListener("click", function () {
+        video.src = "./up2.mp4";
+        startDisplayingUpData();
+        drawGraph(data);
+      });
 
-        downButton.addEventListener('click', function() {
-            video.src = "./EMG/down2.mp4";
-            randomData.innerHTML = downMotionData.join(", ");
-            displayNextDownData();
-            drawGraph(data);
-        });
+      downButton.addEventListener("click", function () {
+        video.src = "./down2.mp4";
+        randomData.innerHTML = downMotionData.join(", ");
+        displayNextDownData();
+        drawGraph(data);
+      });
 
-       // Generate increasing data for up motion
-function generateIncreasingData() {
-    let data = [];
-    let value = 10; // Initial value
-    for (let i = 0; i < 10; i++) {
-        data.push(value);
-        value += Math.floor(Math.random() * 10) + 1; // Add a random value between 1 and 10
-    }
-    return data;
-}
+      // Generate increasing data for up motion
+      function generateIncreasingData() {
+        let data = [];
+        let value = 10; // Initial value
+        for (let i = 0; i < 10; i++) {
+          data.push(value);
+          value += Math.floor(Math.random() * 10) + 1; // Add a random value between 1 and 10
+        }
+        return data;
+      }
 
-// Generate decreasing data for down motion
-function generateDecreasingData() {
-    let data = [];
-    let value = 100; // Initial value
-    for (let i = 0; i < 10; i++) {
-        data.push(value);
-        value -= Math.floor(Math.random() * 10) + 1; // Subtract a random value between 1 and 10
-    }
-    return data;
-}
+      // Generate decreasing data for down motion
+      function generateDecreasingData() {
+        let data = [];
+        let value = 100; // Initial value
+        for (let i = 0; i < 10; i++) {
+          data.push(value);
+          value -= Math.floor(Math.random() * 10) + 1; // Subtract a random value between 1 and 10
+        }
+        return data;
+      }
 
-function startDisplayingUpData() {
-    var index = 0;
-    var intervalId = setInterval(function() {
-        if (index < upMotionData.length) {
+      function startDisplayingUpData() {
+        var index = 0;
+        var intervalId = setInterval(function () {
+          if (index < upMotionData.length) {
             randomData.innerHTML = upMotionData[index];
             index++;
-        } else {
+          } else {
             clearInterval(intervalId);
             randomData.innerHTML = "45";
-        }
-    }, 1000); // Change the delay as needed (in milliseconds)
-}
-function displayNextDownData() {
-    var index = 0;
-    var interval = setInterval(function() {
-        if (index < downMotionData.length) {
+          }
+        }, 1000); // Change the delay as needed (in milliseconds)
+      }
+      function displayNextDownData() {
+        var index = 0;
+        var interval = setInterval(function () {
+          if (index < downMotionData.length) {
             randomData.innerHTML = downMotionData[index++];
-        } else {
+          } else {
             clearInterval(interval); // Stop the interval when all data points are displayed
             randomData.innerHTML = "10";
-        }
-    }, 1000); // Change the delay as needed (in milliseconds)
-}
+          }
+        }, 1000); // Change the delay as needed (in milliseconds)
+      }
 
-function updateGraphWithIncreasingData() {
-            var data = [];
-            for (var i = 1; i <= 10; i++) {
-                data.push(i * 10); // Increase by 10 each time
-            }
-            updateGraph(data);
+      function updateGraphWithIncreasingData() {
+        var data = [];
+        for (var i = 1; i <= 10; i++) {
+          data.push(i * 10); // Increase by 10 each time
         }
+        updateGraph(data);
+      }
 
-        // Function to update the graph with decreasing dataset
-        function updateGraphWithDecreasingData() {
-            var data = [];
-            for (var i = 10; i >= 1; i--) {
-                data.push(i * 10); // Decrease by 10 each time
-            }
-            updateGraph(data);
+      // Function to update the graph with decreasing dataset
+      function updateGraphWithDecreasingData() {
+        var data = [];
+        for (var i = 10; i >= 1; i--) {
+          data.push(i * 10); // Decrease by 10 each time
         }
+        updateGraph(data);
+      }
 
-        // Function to update the graph with new dataset
-        function updateGraph(newDataset) {
-            myChart.data.datasets[0].data = newDataset;
-            myChart.update();
-        }
-          // Generate random data
-          function generateRandomData() {
-            return Math.floor(Math.random() * 100);
-        }
+      // Function to update the graph with new dataset
+      function updateGraph(newDataset) {
+        myChart.data.datasets[0].data = newDataset;
+        myChart.update();
+      }
+      // Generate random data
+      function generateRandomData() {
+        return Math.floor(Math.random() * 100);
+      }
 
-        // Generate random dataset for the graph
-        function generateRandomDataset() {
-            let data = [];
-            for (let i = 0; i < 10; i++) {
-                data.push(generateRandomData());
-            }
-            return data;
+      // Generate random dataset for the graph
+      function generateRandomDataset() {
+        let data = [];
+        for (let i = 0; i < 10; i++) {
+          data.push(generateRandomData());
         }
-// Generate initial graph
-var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-                datasets: [{
-                    label: 'Random Data',
-                    data: generateRandomDataset(),
-                    backgroundColor: 'rgba(255, 99, 132, 0.8)',
-                    borderColor: 'rgba(255, 99, 132, 1.8)',
-                    borderWidth: 1
-                }]
+        return data;
+      }
+      // Generate initial graph
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+          datasets: [
+            {
+              label: "Random Data",
+              data: generateRandomDataset(),
+              backgroundColor: "rgba(255, 99, 132, 0.8)",
+              borderColor: "rgba(255, 99, 132, 1.8)",
+              borderWidth: 1,
             },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-        // Update graph with new random dataset every second
-        setInterval(function() {
-            myChart.data.datasets[0].data = generateRandomDataset();
-            myChart.update();
-        }, 2000);
-
-        
+          ],
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+        },
+      });
+      // Update graph with new random dataset every second
+      setInterval(function () {
+        myChart.data.datasets[0].data = generateRandomDataset();
+        myChart.update();
+      }, 2000);
     </script>
-     <h3 style="margin-left: 750px;">Made By Ayush❤️</h3>
-</body>
+    <h3 style="margin-left: 750px">Made By Ayush❤️</h3>
+  </body>
 </html>
